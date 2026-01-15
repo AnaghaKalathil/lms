@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:{full_name}-{case_type}",
  "creation": "2026-01-13 13:34:13.811362",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -81,14 +82,17 @@
   {
    "fieldname": "assigned_lawyer",
    "fieldtype": "Data",
-   "label": "Assigned Lawyer"
+   "label": "Assigned Lawyer",
+   "read_only": 1
   },
   {
    "fieldname": "client",
    "fieldtype": "Data",
-   "label": "Client"
+   "label": "Client",
+   "read_only": 1
   },
   {
+   "default": "Today",
    "fieldname": "created",
    "fieldtype": "Datetime",
    "label": "Created"
@@ -97,10 +101,11 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-13 16:52:49.603996",
+ "modified": "2026-01-14 13:27:00.076526",
  "modified_by": "Administrator",
  "module": "Legal management",
  "name": "Case Request",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
@@ -122,7 +127,8 @@
    "read": 1,
    "report": 1,
    "role": "Lawyer",
-   "share": 1
+   "share": 1,
+   "write": 1
   },
   {
    "create": 1,
@@ -136,7 +142,6 @@
  ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
- "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [
@@ -160,6 +165,5 @@
    "color": "Orange",
    "title": "Accepted"
   }
- ],
- "title_field": "case_type"
+ ]
 }

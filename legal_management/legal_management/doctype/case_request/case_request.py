@@ -22,6 +22,7 @@ class CaseRequest(Document):
             "client_name": self.full_name,
             "email": self.email,
             "phone": self.phone,
+            "assigned_lawyer": frappe.session.user,
             "status": "Active"
         }).insert(ignore_permissions=True)
 
@@ -29,11 +30,11 @@ class CaseRequest(Document):
         case = frappe.get_doc({
             "doctype": "Case",
             "case_title": f"{self.case_type} - {self.full_name}",
-            "client": client.name,
+            "client": self.client,
             "assigned_lawyer": frappe.session.user,
             "case_type": self.case_type,
             "source_case_request": self.name,
-            "status": "Open"
+            "status": "Active"
         }).insert(ignore_permissions=True)
 
         # update request
@@ -41,9 +42,4 @@ class CaseRequest(Document):
         self.assigned_lawyer = frappe.session.user
 
 
-def get_permission_query_conditions(user):
-   # if user == "Administrator":
-      #  return ""*/
 
-    # lawyers see ONLY new case requests
-    return "`tabCase Request`.status = 'New'"

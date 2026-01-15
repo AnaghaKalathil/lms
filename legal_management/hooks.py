@@ -5,6 +5,13 @@ app_description = "Legal management"
 app_email = "test@gmail.com"
 app_license = "mit"
 
+permission_query_conditions = {
+    "Case Request": "legal_management.permissions.case_request_permission_query",
+    "Case": "legal_management.permissions.case_permission_query",
+    "Client": "legal_management.permissions.client_permission_query",
+    "Hearing": "legal_management.permissions.hearing_permission_query"
+}
+
 # Apps
 # ------------------
 

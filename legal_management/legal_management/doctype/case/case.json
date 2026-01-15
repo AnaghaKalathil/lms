@@ -12,7 +12,9 @@
   "case_type",
   "source_case_request",
   "status",
-  "created_on"
+  "created_on",
+  "hearing_details_section",
+  "hearing"
  ],
  "fields": [
   {
@@ -28,11 +30,12 @@
    "reqd": 1
   },
   {
+   "fetch_from": "source_case_request.full_name",
    "fieldname": "client",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Client",
-   "options": "Client",
+   "options": "Case Request",
    "reqd": 1
   },
   {
@@ -52,6 +55,7 @@
    "reqd": 1
   },
   {
+   "fetch_from": "client.full_name",
    "fieldname": "source_case_request",
    "fieldtype": "Link",
    "label": "Source Case Request",
@@ -66,16 +70,33 @@
    "reqd": 1
   },
   {
+   "default": "Today",
    "fieldname": "created_on",
    "fieldtype": "Date",
    "label": "Created On",
    "reqd": 1
+  },
+  {
+   "fieldname": "hearing_details_section",
+   "fieldtype": "Section Break",
+   "label": "Hearing Details"
+  },
+  {
+   "fieldname": "hearing",
+   "fieldtype": "Table",
+   "label": "Case hearing",
+   "options": "Case Hearing"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2026-01-13 16:09:25.186199",
+ "links": [
+  {
+   "link_doctype": "Hearing",
+   "link_fieldname": "assigned_lawyer"
+  }
+ ],
+ "modified": "2026-01-15 13:32:50.917095",
  "modified_by": "Administrator",
  "module": "Legal management",
  "name": "Case",
@@ -108,7 +129,9 @@
  ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "case_title"
 }

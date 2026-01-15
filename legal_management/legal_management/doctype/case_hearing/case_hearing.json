@@ -1,0 +1,50 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-01-14 14:01:56.542226",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "hearing",
+  "hearing_date",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "hearing",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Hearing",
+   "options": "Hearing",
+   "reqd": 1
+  },
+  {
+   "fieldname": "hearing_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Hearing Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nInactive"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-01-15 10:47:15.935333",
+ "modified_by": "Administrator",
+ "module": "Legal management",
+ "name": "Case Hearing",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
