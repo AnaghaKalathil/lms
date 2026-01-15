@@ -58,3 +58,4 @@ def hearing_permission_query(user):
     # Other users see nothing
     return "1=0"
 
+

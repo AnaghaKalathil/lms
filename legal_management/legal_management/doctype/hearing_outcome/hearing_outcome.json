@@ -1,0 +1,120 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{hearing}-{outcome_type}",
+ "creation": "2026-01-15 14:55:08.480938",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "hearing",
+  "outcome_type",
+  "summary",
+  "column_break_heho",
+  "next_hearing_date",
+  "upload_order",
+  "recorded_by",
+  "recorded_on",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "hearing",
+   "fieldtype": "Link",
+   "label": "Hearing",
+   "options": "Hearing"
+  },
+  {
+   "fieldname": "outcome_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Outcome Type",
+   "options": "Adjourned\nOrder Passed\nEvidence Recorded\nArguments Heard",
+   "reqd": 1
+  },
+  {
+   "fieldname": "summary",
+   "fieldtype": "Small Text",
+   "label": "Summary"
+  },
+  {
+   "fieldname": "next_hearing_date",
+   "fieldtype": "Date",
+   "label": "Next Hearing Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "upload_order",
+   "fieldtype": "Attach",
+   "label": "Upload Order"
+  },
+  {
+   "fetch_from": "hearing.assigned_lawyer",
+   "fieldname": "recorded_by",
+   "fieldtype": "Link",
+   "label": "Recorded By",
+   "options": "User"
+  },
+  {
+   "default": "Today",
+   "fieldname": "recorded_on",
+   "fieldtype": "Date",
+   "label": "Recorded On",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_heho",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Hearing Outcome",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-01-15 17:03:35.931519",
+ "modified_by": "Administrator",
+ "module": "Legal management",
+ "name": "Hearing Outcome",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Lawyer",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
