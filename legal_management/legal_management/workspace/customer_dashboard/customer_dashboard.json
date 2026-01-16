@@ -1,0 +1,58 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"0lEEBa9wof\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Customer Dashboard</span>\",\"col\":12}},{\"id\":\"iKUIa3D0Ok\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Case request\",\"col\":4}},{\"id\":\"gKkgP4d98d\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Interested Lawyers\",\"col\":3}},{\"id\":\"D-dhjxmshc\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"My Cases\",\"col\":3}}]",
+ "creation": "2026-01-16 13:35:52.803225",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "",
+ "idx": 0,
+ "indicator_color": "orange",
+ "is_hidden": 0,
+ "label": "Customer Dashboard",
+ "links": [],
+ "modified": "2026-01-16 16:46:09.502103",
+ "modified_by": "Administrator",
+ "module": "Legal management",
+ "name": "Customer Dashboard",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Customer"
+  }
+ ],
+ "sequence_id": 7.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Interested Lawyers",
+   "link_to": "Case Interest",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "label": "Case request",
+   "link_to": "Case Request",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "My Cases",
+   "link_to": "Case",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Customer Dashboard"
+}

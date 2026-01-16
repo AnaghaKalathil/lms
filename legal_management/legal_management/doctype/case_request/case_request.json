@@ -76,7 +76,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "New\nAccepted\nRejected\nIn Progress\nClosed",
+   "options": "New\nInterested\nAccepted\nRejected\nIn Progress\nClosed",
    "reqd": 1
   },
   {
@@ -101,7 +101,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-14 13:27:00.076526",
+ "modified": "2026-01-16 14:00:53.315958",
  "modified_by": "Administrator",
  "module": "Legal management",
  "name": "Case Request",
@@ -127,17 +127,18 @@
    "read": 1,
    "report": 1,
    "role": "Lawyer",
-   "share": 1,
-   "write": 1
+   "share": 1
   },
   {
    "create": 1,
    "email": 1,
    "export": 1,
    "print": 1,
+   "read": 1,
    "report": 1,
-   "role": "Guest",
-   "share": 1
+   "role": "Customer",
+   "share": 1,
+   "write": 1
   }
  ],
  "row_format": "Dynamic",
