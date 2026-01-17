@@ -1,7 +1,6 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{full_name}-{case_type}",
  "creation": "2026-01-13 13:34:13.811362",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -101,11 +100,10 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-16 14:00:53.315958",
+ "modified": "2026-01-17 10:58:58.289986",
  "modified_by": "Administrator",
  "module": "Legal management",
  "name": "Case Request",
- "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

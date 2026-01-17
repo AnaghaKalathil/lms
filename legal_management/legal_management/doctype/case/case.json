@@ -96,7 +96,7 @@
    "link_fieldname": "assigned_lawyer"
   }
  ],
- "modified": "2026-01-16 17:23:23.551777",
+ "modified": "2026-01-17 14:07:42.633499",
  "modified_by": "Administrator",
  "module": "Legal management",
  "name": "Case",
@@ -134,8 +134,7 @@
    "read": 1,
    "report": 1,
    "role": "Customer",
-   "share": 1,
-   "write": 1
+   "share": 1
   }
  ],
  "row_format": "Dynamic",

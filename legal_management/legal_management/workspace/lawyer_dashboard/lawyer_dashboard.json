@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"QiiIMifr0k\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Upcoming Hearings\",\"col\":4}},{\"id\":\"NXDdCnHoCz\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Hearing Outcomes\",\"col\":4}},{\"id\":\"GRutpvtu-M\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"My Clients\",\"col\":4}},{\"id\":\"tHkwWaoJBF\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"My Cases\",\"col\":4}},{\"id\":\"RSIKOJXs4l\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Interested Cases\",\"col\":4}},{\"id\":\"BnTHQ_O5PN\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Case Requests\",\"col\":4}},{\"id\":\"TMYvtdU-E9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Past Hearing\",\"col\":3}}]",
+ "content": "[{\"id\":\"NXDdCnHoCz\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Hearing Outcomes\",\"col\":4}},{\"id\":\"FicTqEyUkN\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Upcoming Hearing\",\"col\":3}},{\"id\":\"tHkwWaoJBF\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"My Cases\",\"col\":4}},{\"id\":\"RSIKOJXs4l\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Interested Cases\",\"col\":4}},{\"id\":\"BnTHQ_O5PN\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Case Requests\",\"col\":4}},{\"id\":\"TMYvtdU-E9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Past Hearing\",\"col\":3}}]",
  "creation": "2026-01-14 12:09:18.743523",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,7 +13,7 @@
  "is_hidden": 0,
  "label": "Lawyer Dashboard",
  "links": [],
- "modified": "2026-01-16 16:59:52.476417",
+ "modified": "2026-01-17 15:13:34.106417",
  "modified_by": "Administrator",
  "module": "Legal management",
  "name": "Lawyer Dashboard",
@@ -38,11 +38,19 @@
    "type": "DocType"
   },
   {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Upcoming Hearing",
+   "link_to": "Hearing",
+   "stats_filter": "[[\"Hearing\",\"hearing_date\",\">\",\"2026-01-17\",false]]",
+   "type": "DocType"
+  },
+  {
    "color": "Orange",
    "doc_view": "List",
    "label": "Past Hearing",
    "link_to": "Hearing",
-   "stats_filter": "[[\"Hearing\",\"hearing_date\",\"<\",\"2026-01-15\",false]]",
+   "stats_filter": "[[\"Hearing\",\"hearing_date\",\"<\",\"2026-01-17\",false]]",
    "type": "DocType"
   },
   {
@@ -51,22 +59,6 @@
    "label": "Case Requests",
    "link_to": "Case Request",
    "stats_filter": "[[\"Case Request\",\"status\",\"=\",\"New\",false]]",
-   "type": "DocType"
-  },
-  {
-   "color": "Green",
-   "doc_view": "List",
-   "label": "Upcoming Hearings",
-   "link_to": "Hearing",
-   "stats_filter": "[[\"Hearing\",\"hearing_date\",\">\",\"2026-01-15\",false]]",
-   "type": "DocType"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "My Clients",
-   "link_to": "Client",
-   "stats_filter": "[[\"Client\",\"name\",\"=\",null,false]]",
    "type": "DocType"
   },
   {
