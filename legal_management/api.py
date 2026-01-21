@@ -105,3 +105,32 @@ def create_case(case_interest):
         "case": case.name
     }
 
+import frappe
+
+@frappe.whitelist(allow_guest=True)
+def get_case_details(case_title):
+    if not case_title:
+        return None
+
+    case = frappe.db.get_value(
+        "Case",
+        {"case_title": case_title},
+        ["name", "case_title", "case_type", "status", "assigned_lawyer","client"],
+        as_dict=True
+    )
+
+    if not case:
+        return None
+
+    hearings = frappe.get_all(
+        "Hearing",
+        filters={"case": case.name},
+        fields=["hearing_date", "court", "purpose"],
+        order_by="hearing_date asc"
+    )
+
+    return {
+        "case": case,
+        "hearings": hearings
+    }
+

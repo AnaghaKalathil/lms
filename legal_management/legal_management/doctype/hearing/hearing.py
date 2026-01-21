@@ -27,35 +27,47 @@ class Hearing(Document):
         case.save(ignore_permissions=True)
 
     def after_insert(self):
-        self.notify_customer()
-
-    def notify_customer(self):
-        if not self.case:
-            return
-
         case = frappe.get_doc("Case", self.case)
+        cr = frappe.get_doc("Case Request", case.source_case_request)
+        notification_log = frappe.get_doc(
+        {
+        "doctype": "Notification Log",
+        "subject": "New hearing created",
+        "email_content": f"Hearing on {self.hearing_date} for case {case.case_title} at {self.court}",
+        "type": "Alert",
+        "for_user": cr.email,
+        }
+)
+        notification_log.insert(ignore_permissions=True)
+    #     self.notify_customer()
 
-        if not case.source_case_request:
-            return
+    # def notify_customer(self):
+    #     if not self.case:
+    #         return
 
-        case_request = frappe.get_doc("Case Request", case.source_case_request)
+    #     case = frappe.get_doc("Case", self.case)
 
-        if not case_request.email:
-            return
+    #     if not case.source_case_request:
+    #         return
 
-    # Ensure user exists
-        if not frappe.db.exists("User", case_request.email):
-            return
+    #     case_request = frappe.get_doc("Case Request", case.source_case_request)
 
-        frappe.publish_realtime(
-        event="notification",
-        message={
-            "title": "New Hearing Scheduled",
-            "description": f"Hearing on {self.hearing_date} for case {case.case_title}",
-            "doctype": "Hearing",
-            "docname": self.name,
-        },
-        user=case_request.email
-        )
+    #     if not case_request.email:
+    #         return
+
+    # # Ensure user exists
+    #     if not frappe.db.exists("User", case_request.email):
+    #         return
+
+    #     frappe.publish_realtime(
+    #     event="notification",
+    #     message={
+    #         "title": "New Hearing Scheduled",
+    #         "description": f"Hearing on {self.hearing_date} for case {case.case_title}",
+    #         "doctype": "Hearing",
+    #         "docname": self.name,
+    #     },
+    #     user=case_request.email
+    #     )
 
 

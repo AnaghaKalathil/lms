@@ -1,0 +1,29 @@
+{
+ "attach_files": "",
+ "attach_print": 0,
+ "channel": "System Notification",
+ "creation": "2026-01-21 10:56:55.150983",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Hearing",
+ "enabled": 1,
+ "event": "New",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<p>Dear Client,</p>\n\n<p>A new hearing has been scheduled for your case.</p>\n\n<p><b>Case:</b> {{ doc.case }}</p>\n<p><b>Hearing Date:</b> {{ doc.hearing_date }}</p>\n<p><b>Court:</b> {{ doc.court }}</p>\n<p><b>Purpose:</b> {{ doc.purpose }}</p>\n\n<p>Please log in to the portal for more details.</p>\n\n<p>For more details..Contact: <br>\n{{doc.assigned_lawyer}}</p>",
+ "message_type": "HTML",
+ "modified": "2026-01-21 10:56:55.150983",
+ "modified_by": "Administrator",
+ "module": "Legal management",
+ "name": "New Hearing",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_role": "Customer"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "subject": "New hearing"
+}
