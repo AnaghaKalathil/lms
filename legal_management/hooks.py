@@ -17,6 +17,22 @@ permission_query_conditions = {
     
 }
 
+fixtures = [
+    {
+        "dt": "Web Page",
+        "filters": [
+            ["module", "=", "Legal management"]
+        ]
+    },
+    {
+        "dt": "Client Script",
+        "filters": [
+            ["module", "=", "Legal management"]
+        ]
+    }
+]
+
+
 # Apps
 # ------------------
 

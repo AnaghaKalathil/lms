@@ -1,0 +1,24 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Case Interest",
+  "enabled": 1,
+  "modified": "2026-01-21 10:07:32.520255",
+  "module": "Legal management",
+  "name": "Accept Button",
+  "script": "frappe.ui.form.on(\"Case Interest\", {\n    refresh(frm) {\n        if (\n            frm.doc.status === \"Interested\" &&\n            frappe.user.has_role(\"Customer\")\n        ) {\n            frm.add_custom_button(\"Accept Case\", () => {\n                frappe.call({\n                    method: \"legal_management.api.create_case\",\n                    args: {\n                        case_interest: frm.doc.name\n                    },\n                    callback(r) {\n                        if (!r.exc) {\n                            frappe.msgprint(\"Case created successfully\");\n                            frappe.set_route(\"Form\", \"Case\", r.message.case);\n                        }\n                    }\n                });\n            });\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Case Request",
+  "enabled": 1,
+  "modified": "2026-01-21 10:08:14.585984",
+  "module": "Legal management",
+  "name": "Interest Button",
+  "script": "frappe.ui.form.on(\"Case Request\", {\n    refresh(frm) {\n        if (frm.doc.status === \"New\" && frappe.user.has_role(\"Lawyer\")) {\n            frm.add_custom_button(\"I'm Interested\", () => {\n                frappe.call({\n                    method: \"legal_management.api.create_case_interest\",\n                    args: {\n                        case_request: frm.doc.name\n                        \n                    },\n                    callback(r) {\n                        if (!r.exc) {\n                            frappe.msgprint(\"Case Interest successfully recorded\");\n                            frappe.set_route(\"Form\", \"Case Interest\", r.message.case);\n                        }\n                    }\n                });\n            });\n        }\n    }\n});",
+  "view": "Form"
+ }
+]
