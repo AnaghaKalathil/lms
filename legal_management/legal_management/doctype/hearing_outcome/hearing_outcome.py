@@ -5,6 +5,37 @@ from frappe.utils import getdate, today
 
 class HearingOutcome(Document):
 
+    def on_submit(self):
+        case = frappe.get_doc("Case", self.case)
+        cr = frappe.get_doc("Case Request", case.source_case_request)
+        hearing = frappe.get_doc("Hearing", self.hearing)
+
+        user = None
+
+        if getattr(cr, "linked_user", None):
+            user = cr.linked_user
+        elif frappe.db.exists("User", cr.email):
+            user = cr.email
+        else:
+            return
+
+        frappe.get_doc({
+        "doctype": "Notification Log",
+        "subject": "Hearing Outcome Update",
+        "email_content": (
+            f"Your case <b>{hearing.case}</b> hearing on "
+            f"<b>{hearing.hearing_date}</b> has been "
+            f"<b>{self.outcome_type}</b> at <b>{hearing.court}</b>."
+            f"<b>  Contact your lawyer for more details..</b>."
+        ),
+        "type": "Alert",
+        "for_user": user,
+        "document_type": "Hearing Outcome",
+        "document_name": self.name
+    }).insert(ignore_permissions=True)
+
+
+
     def validate(self):
         self.validate_hearing_date()
 
