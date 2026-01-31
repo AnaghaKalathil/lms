@@ -32,6 +32,17 @@ fixtures = [
     }
 ]
 
+override_doctype_class = {
+    "Newsletter": "legal_management.overrides.newsletter.CustomNewsletter",
+    
+   
+}
+doc_events = {
+    "Campaign Email Schedule": {
+        "on_submit": "legal_management.events.campaign_email_schedule.on_submit"
+    }
+}
+
 
 # Apps
 # ------------------
