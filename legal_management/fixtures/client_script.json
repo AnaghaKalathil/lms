@@ -2,6 +2,39 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
+  "dt": "MJML Email Template",
+  "enabled": 1,
+  "modified": "2026-02-02 13:29:55.382150",
+  "module": "Legal management",
+  "name": "MJML preview",
+  "script": "frappe.ui.form.on(\"MJML Email Template\", {\n    refresh(frm) {\n        frm.add_custom_button(\"Preview Email\", () => {\n            frappe.prompt(\n                [\n                    {\n                        label: \"Sample Lead (optional)\",\n                        fieldname: \"lead\",\n                        fieldtype: \"Link\",\n                        options: \"Lead\"\n                    }\n                ],\n                (data) => {\n                    frappe.call({\n                        method: \"legal_management.legal_management.email_campaign.mjml_campaign.preview_mjml_template\",\n                        args: {\n                            template_name: frm.doc.name,\n                            lead_name: data.lead\n                        },\n                        freeze: true,\n                        callback: function (r) {\n                            if (!r.message) {\n                                frappe.msgprint(\"No preview HTML returned\");\n                                return;\n                            }\n                            show_email_preview(r.message);\n                        }\n                    });\n                },\n                \"Preview Email\",\n                \"Preview\"\n            );\n        });\n    }\n});\n\n\nfunction show_email_preview(html) {\n    const dialog = new frappe.ui.Dialog({\n        title: \"Email Preview\",\n        size: \"extra-large\",\n        fields: [\n            {\n                fieldtype: \"HTML\",\n                fieldname: \"preview\"\n            }\n        ]\n    });\n\n    dialog.show();\n\n    // Render MJML HTML directly inside the HTML field\n    dialog.fields_dict.preview.$wrapper.html(`\n        <div style=\"\n            border:1px solid #ddd;\n            padding:20px;\n            background:#fff;\n            max-height:700px;\n            overflow:auto;\n        \">\n            ${html}\n        </div>\n    `);\n}\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Email Campaign",
+  "enabled": 1,
+  "modified": "2026-02-02 14:37:59.921421",
+  "module": "Legal management",
+  "name": "Compile MJML",
+  "script": "frappe.ui.form.on(\"Email Campaign\", {\n    refresh(frm) {\n        if (!frm.is_new()) {\n            frm.add_custom_button(\"Compile MJML\", () => {\n                frappe.call({\n                    method: \"legal_management.email_campaign.mjml_campaign.compile_and_attach_mjml\",\n                    args: {\n                        campaign_name: frm.doc.name\n                    },\n                    freeze: true,\n                    callback(r) {\n                        frappe.msgprint(\"MJML compiled & attached to campaign\");\n                        frm.reload_doc();\n                    }\n                });\n            });\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Email Campaign",
+  "enabled": 1,
+  "modified": "2026-02-02 14:52:05.829492",
+  "module": "Legal management",
+  "name": "Send now email campaign",
+  "script": "frappe.ui.form.on(\"Email Campaign\", {\n    refresh(frm) {\n        if (!frm.is_new()) {\n\n            frm.add_custom_button(\"Send Now\", () => {\n                frappe.confirm(\n                    \"Send this campaign immediately?\",\n                    () => {\n                        frappe.call({\n                            method: \"legal_management.email_campaign.send_now.send_campaign_now\",\n                            args: {\n                                campaign_name: frm.doc.name\n                            },\n                            freeze: true,\n                            callback(r) {\n                                frappe.msgprint(r.message || \"Campaign sent\");\n                            }\n                        });\n                    }\n                );\n            });\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
   "dt": "Hearing Outcome",
   "enabled": 1,
   "modified": "2026-01-21 15:48:23.276720",
