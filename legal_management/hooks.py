@@ -40,6 +40,9 @@ override_doctype_class = {
 doc_events = {
     "Campaign Email Schedule": {
         "on_submit": "legal_management.events.campaign_email_schedule.on_submit"
+    },
+    "Email Campaign": {
+        "validate": "legal_management.overrides.email_campaign.apply_frontend_template"
     }
 }
 
