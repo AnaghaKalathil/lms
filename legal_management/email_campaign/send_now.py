@@ -4,10 +4,23 @@ import frappe
 def send_campaign_now(campaign_name):
     campaign = frappe.get_doc("Email Campaign", campaign_name)
     campaign.reload()
+    campaigns = frappe.get_doc("Campaign", campaign)
 
-    template_name = campaign.get("custom_email_template")
+   
+    if not campaigns.campaign_schedules:
+        frappe.throw("No Campaign Schedule found")
+
+    
+    template_name = campaigns.campaign_schedules[0].email_template
     if not template_name:
-        frappe.throw("Please select and save an Email Template before sending")
+        return
+
+   
+    template = frappe.get_doc("Email Template", template_name)
+
+    # template_name = campaign.get("custom_email_template")
+    # if not template_name:
+    #     frappe.throw("Please select and save an Email Template before sending")
 
     template = frappe.get_doc("Email Template", template_name)
 

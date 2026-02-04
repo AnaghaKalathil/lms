@@ -12,9 +12,7 @@ permission_query_conditions = {
     "Hearing": "legal_management.permissions.hearing_permission_query",
     "Case Interest": "legal_management.permissions.caseinterest_permission_query",
     "Hearing Outcome": "legal_management.permissions.hearingoutcome_permission_query"
-    
-   #  "Case": "legal_management.doctype.case.case.get_permission_query_conditions"
-    
+         
 }
 
 fixtures = [
@@ -43,6 +41,14 @@ doc_events = {
     },
     "Email Campaign": {
         "validate": "legal_management.overrides.email_campaign.apply_frontend_template"
+    },
+    #  "Email Group": {
+    #     "on_update": "legal_management.overrides.email_group.on_update"
+    # },
+     "Email Group": {
+        "after_insert": "legal_management.utils.segments.on_member_change",
+        "after_delete": "legal_management.utils.segments.on_member_change",
+        "on_update": "legal_management.utils.segments.on_member_change"
     }
 }
 
