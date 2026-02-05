@@ -1,6 +1,5 @@
 import json
 import frappe
-from frappe.utils import now
 
 def refresh_email_group_segment(email_group_name):
     ALLOWED_FIELDS = {"email", "unsubscribed", "full_name", "first_name", "last_name"}
@@ -9,13 +8,13 @@ def refresh_email_group_segment(email_group_name):
     group = frappe.get_doc("Email Group", email_group_name)
 
     if not group.segment_rules or not group.source_email_group:
-        return []
+        return set()
 
     segment = json.loads(group.segment_rules)
     conditions = segment.get("conditions", [])
 
     if not conditions:
-        return []
+        return set()
 
     where_clauses = []
     params = {"source_group": group.source_email_group}
@@ -25,34 +24,39 @@ def refresh_email_group_segment(email_group_name):
         op = c.get("condition") or "="
         value = c.get("value")
 
-        if field not in ALLOWED_FIELDS:
-            continue
-        if op not in ALLOWED_OPERATORS:
+        if field not in ALLOWED_FIELDS or op not in ALLOWED_OPERATORS:
             continue
 
         key = f"val_{i}"
 
         if op in ("IN", "NOT IN"):
             if not isinstance(value, list):
-                value = [v.strip() for v in str(value).split(",")]
-            placeholders = ", ".join([f"%({key}_{j})s" for j in range(len(value))])
-            where_clauses.append(f"`{field}` {op} ({placeholders})")
+                value = [v.strip() for v in str(value).split(",") if v.strip()]
+
+            placeholders = []
             for j, v in enumerate(value):
-                params[f"{key}_{j}"] = v
+                pname = f"{key}_{j}"
+                placeholders.append(f"%({pname})s")
+                params[pname] = v
+
+            where_clauses.append(f"`{field}` {op} ({', '.join(placeholders)})")
+
         elif op in ("LIKE", "NOT LIKE"):
             where_clauses.append(f"`{field}` {op} %({key})s")
             params[key] = f"%{value}%"
+
         elif op == "!=" and (value is None or value == ""):
             where_clauses.append(f"`{field}` IS NOT NULL AND `{field}` != ''")
+
         else:
             where_clauses.append(f"`{field}` {op} %({key})s")
             params[key] = value
 
     where_sql = " AND ".join(where_clauses) or "1=1"
 
-    members = frappe.db.sql(
+    rows = frappe.db.sql(
         f"""
-        SELECT email, name
+        SELECT DISTINCT email
         FROM `tabEmail Group Member`
         WHERE email_group = %(source_group)s
           AND email IS NOT NULL
@@ -63,34 +67,51 @@ def refresh_email_group_segment(email_group_name):
         as_dict=True
     )
 
-    return members
-
+    return {r["email"] for r in rows}
 def sync_segment_email_group(email_group_name):
     group = frappe.get_doc("Email Group", email_group_name)
 
     if not group.segment_rules or not group.source_email_group:
         return 0
 
-    members = refresh_email_group_segment(email_group_name)
+    target_emails = refresh_email_group_segment(email_group_name)
 
-    # Delete existing members
-    frappe.db.sql(
-        "DELETE FROM `tabEmail Group Member` WHERE email_group = %(g)s",
-        {"g": email_group_name}
+    existing_emails = set(
+        frappe.db.get_all(
+            "Email Group Member",
+            filters={"email_group": email_group_name},
+            pluck="email"
+        )
     )
 
-    # Insert new members
-    for m in members:
-        frappe.get_doc({
-            "doctype": "Email Group Member",
-            "email_group": email_group_name,
-            "email": m["email"],
-            "unsubscribed": 0
-        }).insert(ignore_permissions=True)
+    to_add = target_emails - existing_emails
+    to_remove = existing_emails - target_emails
 
-    group.db_set("last_refreshed_on", now())
+    if to_remove:
+        frappe.db.sql(
+            """
+            DELETE FROM `tabEmail Group Member`
+            WHERE email_group = %(g)s
+              AND email IN %(emails)s
+            """,
+            {"g": email_group_name, "emails": tuple(to_remove)}
+        )
+
+    if to_add:
+        frappe.db.bulk_insert(
+        "Email Group Member",
+        ["name", "email_group", "email", "unsubscribed"],
+        [
+            (frappe.generate_hash(length=10), email_group_name, email, 0)
+            for email in to_add
+        ]
+    )
+
+    # Optional: track refresh time
+    # group.db_set("last_refreshed_on", now())
+
     frappe.db.commit()
-    return len(members)
+    return len(target_emails)
 
 def on_member_change(doc, method=None):
     """
