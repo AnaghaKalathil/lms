@@ -47,7 +47,6 @@ doc_events = {
     # },
      "Email Group": {
         "after_insert": "legal_management.utils.segments.on_member_change",
-        "after_delete": "legal_management.utils.segments.on_member_change",
         "on_update": "legal_management.utils.segments.on_member_change"
     }
 }

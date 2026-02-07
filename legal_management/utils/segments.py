@@ -99,19 +99,31 @@ def sync_segment_email_group(email_group_name):
 
     if to_add:
         frappe.db.bulk_insert(
+            "Email Group Member",
+            ["name", "email_group", "email", "unsubscribed"],
+            [
+                (frappe.generate_hash(length=10), email_group_name, email, 0)
+                for email in to_add
+            ]
+        )
+
+    # ✅ FIX: update subscriber count
+    count = frappe.db.count(
         "Email Group Member",
-        ["name", "email_group", "email", "unsubscribed"],
-        [
-            (frappe.generate_hash(length=10), email_group_name, email, 0)
-            for email in to_add
-        ]
+        filters={"email_group": email_group_name}
     )
 
-    # Optional: track refresh time
-    # group.db_set("last_refreshed_on", now())
+    frappe.db.set_value(
+        "Email Group",
+        email_group_name,
+        "total_subscribers",
+        count,
+        update_modified=False
+    )
 
     frappe.db.commit()
-    return len(target_emails)
+    return count
+
 
 def on_member_change(doc, method=None):
     """

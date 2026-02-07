@@ -1,0 +1,20 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    // proxy: {
+    //   "/api": {
+    //     target: "http://development.localhost:8000", // 👈 your frappe site
+    //     changeOrigin: true,
+    //     secure: false,
+    //   },
+   
+  //  },
+     watch: {
+      usePolling: true,
+      interval: 100, // milliseconds
+    },
+  },
+});
